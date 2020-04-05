@@ -3,8 +3,11 @@
 
 Lawn &amp; garden advice via AI and text messaging
 
-## Build
-Travis CI should run all the build and testing necessary
+## Why a Monorepo?
+Since these are Lambdas and are written independently of each other, it does make sense to have a repo for each function, but for the time being, and organization of this project, it made sense to keep everything in one repo.
+
+## Build & Deply
+Travis CI should run all the build and testing necessary, then deploy to each lambda automatically.
 
 ## Test
 Code coverage is important, and testing should be as well
