@@ -3,10 +3,10 @@
 name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+# events but only for the main branch
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   deploy_getCurrentWeather_source:
@@ -36,7 +36,7 @@ jobs:
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: us-east-1
+          aws_region: ${{ secrets.AWS_REGION }}
           function_name: getCurrentWeather
           source: ./getCurrentWeather/index.js
   deploy_sendPrecipitationReport_source:
@@ -66,6 +66,6 @@ jobs:
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: us-east-1
+          aws_region: ${{ secrets.AWS_REGION }}
           function_name: sendPrecipitationReport
           source: ./sendPrecipitationReport/index.js
