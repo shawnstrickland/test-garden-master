@@ -24,7 +24,7 @@ jobs:
       - name: npm install and build
         run: |
           npm ci --prefix ./getCurrentWeather
-          npm run build --if-present --prefix ./getCurrentWeather
+          npm run build --if-present
         env:
           CI: true
       - name: zip
@@ -54,13 +54,13 @@ jobs:
       - name: npm install and build
         run: |
           npm ci --prefix ./sendPrecipitationReport
-          npm run build --if-present --prefix ./sendPrecipitationReport
+          npm run build --if-present
         env:
           CI: true
       - name: zip
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r ./bundle.zip ./sendPrecipitationReport/sendPrecipitationReport
+          args: zip -qq -r ./bundle.zip ./sendPrecipitationReport
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
