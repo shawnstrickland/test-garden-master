@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/shawnstrickland/test-garden-master/issues"
   },
-  "homepage": "https://github.com/shawnstrickland/test-garden-master#readme"
+  "homepage": "https://github.com/shawnstrickland/test-garden-master#readme",
+  "dependencies": {
+    "googleapis": "^39.2.0"
+  }
 }
