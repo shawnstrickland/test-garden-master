@@ -37,8 +37,7 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-east-1
-          function_name: test-function
-          # zip_file: bundle.zip
+          function_name: getCurrentWeather
           source: ./getCurrentWeather/index.js
   deploy_sendPrecipitationReport_source:
     name: build and deploy lambda
@@ -68,6 +67,5 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-east-1
-          function_name: test-function-2
-          # zip_file: bundle.zip
+          function_name: sendPrecipitationReport
           source: ./sendPrecipitationReport/index.js
