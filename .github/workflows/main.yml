@@ -23,14 +23,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install and build
         run: |
-          npm ci --prefix ./getCurrentWeather
-          npm run build --if-present --prefix ./getCurrentWeather
+          npm ci
+          npm run build --if-present
         env:
           CI: true
       - name: zip
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r ./bundle.zip ./getCurrentWeather
+          args: zip -qq -r ./bundle.zip
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
@@ -53,14 +53,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install and build
         run: |
-          npm ci --prefix ./sendPrecipitationReport
-          npm run build --if-present --prefix ./sendPrecipitationReport
+          npm ci
+          npm run build --if-present
         env:
           CI: true
       - name: zip
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r ./bundle.zip ./sendPrecipitationReport
+          args: zip -qq -r ./bundle.zip
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
