@@ -49,11 +49,7 @@ async function main () {
 main();
 
 async function authorize() {
-  let credentials = JSON.parse(await fs.readFileSync('./credentials.json'));
-
-  let jwtClient = new google.auth.JWT(credentials.client_email, null, credentials.private_key, [
+  return new google.auth.JWT(process.env.GOOGLE_SHEETS_CLIENT_EMAIL, null, process.env.GOOGLE_SHEETS_PRIVATE_KEY, [
     "https://www.googleapis.com/auth/spreadsheets",
   ]);
-
-  return jwtClient;
 }
