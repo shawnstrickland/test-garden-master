@@ -39,6 +39,7 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: getCurrentWeather
           source: ./getCurrentWeather/index.js
+          environment: GOOGLE_SHEETS_SPREADSHEET_ID=${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
   deploy_sendPrecipitationReport_source:
     name: build and deploy lambda
     strategy:
@@ -69,3 +70,4 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: sendPrecipitationReport
           source: ./sendPrecipitationReport/index.js
+          environment: GOOGLE_SHEETS_SPREADSHEET_ID=${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
