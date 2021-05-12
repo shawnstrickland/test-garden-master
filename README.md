@@ -1,5 +1,5 @@
-# test-garden-master
-![deploy to lambda](https://github.com/shawnstrickland/test-garden-master/workflows/deploy%20to%20lambda/badge.svg)
+# Garden Master
+[![CI](https://github.com/shawnstrickland/Garden-Master/actions/workflows/main.yml/badge.svg)](https://github.com/shawnstrickland/Garden-Master/actions/workflows/main.yml)
 
 Lawn & garden advice and automation via AI and text messaging
 
