@@ -1,7 +1,7 @@
 {
-  "name": "garden-master-sendPrecipitationReport",
+  "name": "garden-master-appendToGoogleSheets",
   "version": "1.0.0",
-  "description": "Lawn &amp; garden advice via AI and text messaging",
+  "description": "Lawn & garden advice via AI and text messaging",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/shawnstrickland/garden-master/issues"
   },
-  "homepage": "https://github.com/shawnstrickland/garden-master#readme"
+  "homepage": "https://github.com/shawnstrickland/garden-master#readme",
+  "dependencies": {
+    "googleapis": "^73.0.0",
+    "node-forge": ">=0.10.0",
+    "json-bigint": ">=1.0.0"
+  }
 }
