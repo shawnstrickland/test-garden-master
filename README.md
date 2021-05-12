@@ -4,14 +4,14 @@
 Lawn & garden advice and automation via AI and text messaging
 
 ## Roadmap
-[x] Collect Daily Precipitation for purposes of microclimates and exactness
-[x] Log Precipitation rates, every X days send a text reminder about rainfall totals
-[ ] Add personalized Alexa Skill for updates
-[ ] Add bi-directional text messaging and NLP ("How much rainfall have we had this month?", "Do I need to water my X this week?")
-[ ] Measure stored water via rain barrels
-[ ] Utilize precipitation rates from above to determine when and how often to water landscape and garden with harvested rain water
-[ ] Automate watering from rain barrels via Pi-like devices, servos, small pumps and drip irrigation.
-[ ] Web interface/dashboard for it all
+ - [x] Collect Daily Precipitation for purposes of microclimates and exactness
+ - [x] Log Precipitation rates, every X days send a text reminder about rainfall totals
+ - [ ] Add personalized Alexa Skill for updates
+ - [ ] Add bi-directional text messaging and NLP ("How much rainfall have we had this month?", "Do I need to water my X this week?")
+ - [ ] Measure stored water via rain barrels
+ - [ ] Utilize precipitation rates from above to determine when and how often to water landscape and garden with harvested rain water
+ - [ ] Automate watering from rain barrels via Pi-like devices, servos, small pumps and drip irrigation.
+ - [ ] Web interface/dashboard for it all
 
 ## But Why?
 I'm really into plants and landscaping, but I'm kinda busy sometimes. So I sought out a hyper-local solution to watching how much rain has *actually* fallen in my space on Earth. This is helpful for determining what kind of watering I need to do right now to keep my plants and landscaping happy - and in the future - can even reactively compensate when water is available. Ideally, no water is wasted, and excess isn't used from municipal water services (because it's simply not needed).
