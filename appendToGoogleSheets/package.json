@@ -1,5 +1,5 @@
 {
-  "name": "garden-master",
+  "name": "garden-master-appendToGoogleSheets",
   "version": "1.0.0",
   "description": "Lawn & garden advice via AI and text messaging",
   "main": "index.js",
