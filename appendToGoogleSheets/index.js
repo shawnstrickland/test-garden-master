@@ -42,7 +42,7 @@ async function main (event) {
           //     }
           // }
           appendCells: {
-            sheetId: 1,
+            range: "Sheet1!A1",
             rows: [
               {
                 values: ['a test']
