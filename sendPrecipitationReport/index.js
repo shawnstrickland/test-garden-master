@@ -94,7 +94,7 @@ exports.handler = async (event) => {
     
     var params = {
       Message: messageString, /* required */
-      PhoneNumber: '18167192137',
+      PhoneNumber: process.env.PHONE_NUMBER,
       Subject: 'Watering Reminder'
     }
 

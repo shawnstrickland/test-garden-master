@@ -62,7 +62,7 @@ async function writeCurrentWeatherData(event, jsonBody) {
             
             var messageParams = {
               Message: messageString, /* required */
-              PhoneNumber: '18167192137',
+              PhoneNumber: process.env.PHONE_NUMBER,
               Subject: 'Water Totals Today'
             }
             
