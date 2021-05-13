@@ -101,5 +101,5 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: appendToGoogleSheets
           # source: ./appendToGoogleSheets
-          zip_file: ./appendToGoogleSheets/bundle.zip
+          zip_file: bundle.zip
           environment: GOOGLE_SHEETS_SPREADSHEET_ID=${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }},GOOGLE_SHEETS_PRIVATE_KEY=${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY }},GOOGLE_SHEETS_CLIENT_EMAIL=${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}
