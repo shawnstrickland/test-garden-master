@@ -1,4 +1,4 @@
-const fs = require('fs');
+var aws = require('aws-sdk')
 const {google} = require('googleapis');
 const sheets = google.sheets('v4');
 const s3 = new aws.S3();
