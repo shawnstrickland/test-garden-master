@@ -83,19 +83,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      
-          - name: npm install and build
+      - name: npm install and build
         run: |
           npm ci --prefix ./appendToGoogleSheets
           npm run build --if-present --prefix ./appendToGoogleSheets
         env:
           CI: true
-
-      - name: zip
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r bundle.zip ./appendToGoogleSheets
-
+      # - name: zip
+      #   uses: montudor/action-zip@v1
+      #   with:
+      #     args: zip -qq -r bundle.zip ./appendToGoogleSheets
       # - name: AWS Lambda Layer Publish
       #   uses: taotao2345/aws-lambda-publishlayer@v1.0.0
       #   env:
@@ -103,9 +100,8 @@ jobs:
       #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #   with:
-      #     layer_name: appendToGoogleSheets
-      #     zip_file: bundle.zip
-
+      #     layer_name: TargetFunctionName
+      #     zip_file: path/to/file.zip
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
