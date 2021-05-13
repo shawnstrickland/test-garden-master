@@ -4,6 +4,8 @@ const sheets = google.sheets('v4');
 const s3 = new aws.S3();
 
 async function main (event) {
+  let precipitationTotal
+
   // Get S3 object written
   try {
     const s3Event = event.Records[0].s3
@@ -20,8 +22,7 @@ async function main (event) {
       .promise()
       
     const bodyAsJSON = JSON.parse(file.Body.toString('utf-8'))
-    const precipitationTotal = bodyAsJSON.observations[0].imperial.precipTotal
-    return precipitationTotal
+    precipitationTotal = bodyAsJSON.observations[0].imperial.precipTotal
   } catch (err) {
     console.log(err);
   }
@@ -45,7 +46,7 @@ async function main (event) {
             range: "Sheet1!A1",
             rows: [
               {
-                values: ['a test']
+                values: [precipitationTotal]
               }
             ]
           }
@@ -73,6 +74,7 @@ async function main (event) {
     )).data;
     // TODO: Change code below to process the `response` object:
     console.log(JSON.stringify(response, null, 2));
+    return response
   } catch (err) {
     console.error(err);
   }
