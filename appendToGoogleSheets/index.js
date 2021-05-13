@@ -42,7 +42,7 @@ async function main (event) {
           //     }
           // }
           appendCells: {
-            sheetId: 0,
+            sheetId: 1,
             rows: [
               {
                 values: ['a test']
