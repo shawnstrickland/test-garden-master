@@ -1,6 +1,7 @@
 const fs = require('fs');
 const {google} = require('googleapis');
 const sheets = google.sheets('v4');
+const s3 = new aws.S3();
 
 async function main (event) {
   const s3Event = event.Records[0].s3
