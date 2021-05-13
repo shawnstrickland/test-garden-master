@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy_getCurrentWeather_source:
-    name: build and deploy lambda
+    name: build and deploy getCurrentWeather lambda
     strategy:
       matrix:
         node-version: [14.x]
@@ -41,7 +41,7 @@ jobs:
           source: ./getCurrentWeather/index.js
           environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }}
   deploy_sendPrecipitationReport_source:
-    name: build and deploy lambda
+    name: build and deploy sendPrecipitationReport lambda
     strategy:
       matrix:
         node-version: [14.x]
@@ -72,7 +72,7 @@ jobs:
           source: ./sendPrecipitationReport/index.js
           environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }}
   deploy_appendToGoogleSheets_source:
-    name: build and deploy lambda
+    name: build and deploy appendToGoogleSheets lambda
     strategy:
       matrix:
         node-version: [14.x]
