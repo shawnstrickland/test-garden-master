@@ -91,10 +91,10 @@ jobs:
         env:
           CI: true
 
-      # - name: zip
-      #   uses: montudor/action-zip@v1
-      #   with:
-      #     args: zip -qq -r bundle.zip ./appendToGoogleSheets
+      - name: zip
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r bundle.zip ./appendToGoogleSheets
 
       # - name: AWS Lambda Layer Publish
       #   uses: taotao2345/aws-lambda-publishlayer@v1.0.0
