@@ -2,7 +2,7 @@ const fs = require('fs');
 const {google} = require('googleapis');
 const sheets = google.sheets('v4');
 
-async function main () {
+async function main (event) {
   const s3Event = event.Records[0].s3
   
   var params = {
