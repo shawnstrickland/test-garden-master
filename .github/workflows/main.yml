@@ -103,7 +103,7 @@ jobs:
           layer_name: NodeAppendToGoogleSheets
           zip_file: ./appendToGoogleSheetsBundle.zip
           description: This is a description to help me figure out if layer published as intended.
-          compatible_runtimes: "[Node.js 14]"
+          compatible_runtimes: "[nodejs14.x]"
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
