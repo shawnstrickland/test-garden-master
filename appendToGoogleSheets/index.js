@@ -10,14 +10,15 @@ async function main (event) {
   // Get S3 object written
   try {
     const s3Event = event.Records[0].s3
+    console.log(s3Event)
   
     var params = {
       Bucket: s3Event.bucket.name, 
-      Key: s3Event.object.key + '/current.json'
+      Key: s3Event.object.key
     }
     
-    let dateParts = params.Key.split('/')
-    date = `${dateParts[2]}/${dateParts[3]}/${dateParts[1]}`
+    let keyParts = params.Key.split('/')
+    date = `${keyParts[2]}/${keyParts[3]}/${keyParts[1]}`
 
     const file = await s3
       .getObject(params)
@@ -26,7 +27,9 @@ async function main (event) {
     const bodyAsJSON = JSON.parse(file.Body.toString('utf-8'))
     precipitationTotal = bodyAsJSON.observations[0].imperial.precipTotal
     
-    let range = `${dateParts[2]}!A1`;
+    // TODO: Write to sheet with month and year
+    // if it doesn't already exist, add it, then append to new sheet
+    let range = `${keyParts[2]}!A1`; // using number of month for the time being
     let valueInputOption = "RAW";
     let myValue = precipitationTotal;
     
