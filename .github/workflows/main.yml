@@ -102,6 +102,7 @@ jobs:
         with:
           layer_name: appendToGoogleSheets
           zip_file: ./appendToGoogleSheetsBundle.zip
+          description: This is a description to help me figure out if layer published as intended.
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
