@@ -39,7 +39,7 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: getCurrentWeather
           source: ./getCurrentWeather/index.js
-          environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }},API_KEY=${{ secrets.WEATHER_API_KEY }}
+          environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }},API_KEY=${{ secrets.WEATHER_API_KEY }},BUCKET_NAME=${{ secrets.BUCKET_NAME }}
   deploy_sendPrecipitationReport_source:
     name: build and deploy sendPrecipitationReport lambda
     strategy:
@@ -70,7 +70,7 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: sendPrecipitationReport
           source: ./sendPrecipitationReport/index.js
-          environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }}
+          environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }},DAYS=3,WATER_NEEDED=0.5,SEND_MESSAGE=true,BUCKET_NAME=${{ secrets.BUCKET_NAME }}
   deploy_appendToGoogleSheets_source:
     name: build and deploy appendToGoogleSheets lambda
     strategy:
