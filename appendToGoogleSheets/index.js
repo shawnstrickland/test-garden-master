@@ -5,6 +5,7 @@ const s3 = new aws.S3();
 
 async function main (event) {
   let precipitationTotal
+  let date
 
   // Get S3 object written
   try {
@@ -15,7 +16,8 @@ async function main (event) {
       Key: s3Event.object.key + '/current.json'
     }
     
-    console.log(params.Bucket, params.Key)
+    let dateParts = params.Key.split('/')
+    date = `${dateParts[2]}/${dateParts[3]}/${dateParts[1]}`
 
     const file = await s3
       .getObject(params)
@@ -23,60 +25,31 @@ async function main (event) {
       
     const bodyAsJSON = JSON.parse(file.Body.toString('utf-8'))
     precipitationTotal = bodyAsJSON.observations[0].imperial.precipTotal
-  } catch (err) {
-    console.log(err);
-  }
-
-  let requests = [];
-  // Change the spreadsheet's title.
-  requests.push(
-      {
-          // updateSpreadsheetProperties: {
-          //     properties: {
-          //         title: 'Test New',
-          //     },
-          //     fields: 'title'
-          // }
-          // addSheet: {
-          //     properties: {
-          //         title: 'Yet Another Cool Test Create SheetFrom API And Again'
-          //     }
-          // }
-          appendCells: {
-            range: "Sheet1!A1",
-            rows: [
-              {
-                values: [precipitationTotal]
-              }
-            ]
-          }
-      }
-  );
-  // Find and replace text.
-  // requests.push({
-  // findReplace: {
-  //     find,
-  //     replacement,
-  //     allSheets: true,
-  // },
-  // });
-
-  // Update spreadsheet
-  try {
+    
+    let range = `${dateParts[2]}!A1`;
+    let valueInputOption = "RAW";
+    let myValue = precipitationTotal;
+    
+    let values = [[date, myValue, new Date()]];
+    let resource = {
+        values,
+    };
+    
     const authClient = await authorize();
-    const batchUpdateRequest = {requests};
-    const response = (await sheets.spreadsheets.batchUpdate(
+    const response = (await sheets.spreadsheets.values.append(
         {
-            spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
-            resource: batchUpdateRequest,
-            auth: authClient
+          spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+          range,
+          valueInputOption,
+          resource,
+          auth: authClient
         }
     )).data;
     // TODO: Change code below to process the `response` object:
     console.log(JSON.stringify(response, null, 2));
     return response
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 }
 
