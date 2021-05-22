@@ -7,6 +7,7 @@ Lawn & garden advice and automation via AI and text messaging
  - [x] Collect Daily Precipitation from personal or neighborhood weather station for purposes of microclimates and exactness
  - [x] Log Precipitation rates
  - [x] Every X days send a text reminder about rainfall totals
+ - [x] Add Google Sheets API for easier reference to daily totals, could also be referenced later for big data
  - [ ] Add personalized Alexa Skill for updates
  - [ ] Add bi-directional text messaging and NLP ("How much rainfall have we had this month?", "Do I need to water my X this week?")
  - [ ] Measure stored water via rain barrels
