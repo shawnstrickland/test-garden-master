@@ -93,6 +93,8 @@ jobs:
         uses: montudor/action-zip@v1
         with:
           args: zip -qq -r appendToGoogleSheetsBundle.zip ./appendToGoogleSheets
+      # This works below, however publishing on each push may not be necessary (and node modules are quite heavy)
+      
       - name: AWS Lambda Layer Publish
         uses: killdozerx2/aws-lambda-publishlayer@v1.0.0
         env:
