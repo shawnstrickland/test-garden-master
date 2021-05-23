@@ -46,7 +46,7 @@ async function main (event) {
     
     // TODO: Write to sheet with month and year
     // if it doesn't already exist, add it, then append to new sheet
-    let range = `${returnMonth(keyParts[2])} - ${keyParts[1]}!A1`; // using number of month for the time being
+    let range = `${keyParts[2]} - ${keyParts[1]}!A1`; // using number of month for the time being
     let valueInputOption = "RAW";
     let myValue = precipitationTotal;
     
@@ -65,28 +65,20 @@ async function main (event) {
     })
 
     console.log(sheet)
-    console.log(`${returnMonth(keyParts[2])} - ${keyParts[1]}`)
-    if (sheet.includes(`${returnMonth(keyParts[2])} - ${keyParts[1]}`)) {
-      // If Sheet exists, update it, otherwise create it
 
-      const response = (await sheets.spreadsheets.values.append(
-        {
-          spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
-          range,
-          valueInputOption,
-          resource,
-          auth: authClient
-        }
-      )).data;
+    const response = (await sheets.spreadsheets.values.append(
+      {
+        spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+        range,
+        valueInputOption,
+        resource,
+        auth: authClient
+      }
+    )).data;
 
-      // TODO: Change code below to process the `response` object:
-      console.log(JSON.stringify(response, null, 2));
-      return response      
-    } else {
-      console.log('need to add this part')
-    }
-
-
+    // TODO: Change code below to process the `response` object:
+    console.log(JSON.stringify(response, null, 2));
+    return response
   } catch (err) {
     console.log(err);
   }
