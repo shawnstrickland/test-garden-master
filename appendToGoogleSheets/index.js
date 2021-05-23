@@ -17,7 +17,7 @@ function returnMonth (monthDigit) {
   month[9] = "October"
   month[10] = "November"
   month[11] = "December"
-  return [monthDigit - 1]
+  return month[monthDigit - 1]
 }
 
 async function main (event) {
@@ -56,6 +56,17 @@ async function main (event) {
     };
     
     const authClient = await authorize();
+
+    const sheet = (await sheets.spreadsheets.get({
+      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID
+    })).data.sheets.map(sheet => {
+      return sheet.properties.title
+    })
+
+    console.log(sheet)
+
+    // If Sheet exists, update it, otherwise create it
+
     const response = (await sheets.spreadsheets.values.append(
         {
           spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
