@@ -65,10 +65,10 @@ async function main (event) {
     })
 
     console.log(sheet)
+    if (sheet.includes(`${returnMonth(keyParts[2])}- ${keyParts[1]}`)) {
+      // If Sheet exists, update it, otherwise create it
 
-    // If Sheet exists, update it, otherwise create it
-
-    const response = (await sheets.spreadsheets.values.append(
+      const response = (await sheets.spreadsheets.values.append(
         {
           spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
           range,
@@ -76,10 +76,16 @@ async function main (event) {
           resource,
           auth: authClient
         }
-    )).data;
-    // TODO: Change code below to process the `response` object:
-    console.log(JSON.stringify(response, null, 2));
-    return response
+      )).data;
+
+      // TODO: Change code below to process the `response` object:
+      console.log(JSON.stringify(response, null, 2));
+      return response      
+    } else {
+      console.log('need to add this part')
+    }
+
+
   } catch (err) {
     console.log(err);
   }
