@@ -2,23 +2,8 @@ var aws = require('aws-sdk')
 const {google} = require('googleapis');
 const sheets = google.sheets('v4');
 const s3 = new aws.S3();
-
-function returnMonth (monthDigit) {
-  var month = new Array()
-  month[0] = "January"
-  month[1] = "February"
-  month[2] = "March"
-  month[3] = "April"
-  month[4] = "May"
-  month[5] = "June"
-  month[6] = "July"
-  month[7] = "August"
-  month[8] = "September"
-  month[9] = "October"
-  month[10] = "November"
-  month[11] = "December"
-  return month[monthDigit - 1]
-}
+const { authorize } = require('./google')
+const { returnMonth } = require('./prettyDate')
 
 async function main (event) {
   let precipitationTotal
@@ -48,9 +33,8 @@ async function main (event) {
     // if it doesn't already exist, add it, then append to new sheet
     let range = `${keyParts[2]} - ${keyParts[1]}!A1`; // using number of month for the time being
     let valueInputOption = "RAW";
-    let myValue = precipitationTotal;
     
-    let values = [[date, myValue, new Date()]];
+    let values = [[date, precipitationTotal, new Date()]];
     let resource = {
         values,
     };
@@ -82,12 +66,6 @@ async function main (event) {
   } catch (err) {
     console.log(err);
   }
-}
-
-async function authorize() {
-  return new google.auth.JWT(process.env.GOOGLE_SHEETS_CLIENT_EMAIL, null, process.env.GOOGLE_SHEETS_PRIVATE_KEY.trim(), [
-    "https://www.googleapis.com/auth/spreadsheets",
-  ]);
 }
 
 exports.handler = async (event) => {
