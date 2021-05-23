@@ -58,7 +58,8 @@ async function main (event) {
     const authClient = await authorize();
 
     const sheet = (await sheets.spreadsheets.get({
-      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID
+      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+      auth: authClient
     })).data.sheets.map(sheet => {
       return sheet.properties.title
     })
