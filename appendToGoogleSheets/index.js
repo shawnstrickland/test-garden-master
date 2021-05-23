@@ -65,6 +65,7 @@ async function main (event) {
     })
 
     console.log(sheet)
+    console.log(`${returnMonth(keyParts[2])} - ${keyParts[1]}`)
     if (sheet.includes(`${returnMonth(keyParts[2])} - ${keyParts[1]}`)) {
       // If Sheet exists, update it, otherwise create it
 
