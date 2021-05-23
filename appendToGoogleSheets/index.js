@@ -46,7 +46,7 @@ async function main (event) {
     
     // TODO: Write to sheet with month and year
     // if it doesn't already exist, add it, then append to new sheet
-    let range = `${returnMonth(keyParts[2])}- ${keyParts[1]}!A1`; // using number of month for the time being
+    let range = `${returnMonth(keyParts[2])} - ${keyParts[1]}!A1`; // using number of month for the time being
     let valueInputOption = "RAW";
     let myValue = precipitationTotal;
     
@@ -65,7 +65,7 @@ async function main (event) {
     })
 
     console.log(sheet)
-    if (sheet.includes(`${returnMonth(keyParts[2])}- ${keyParts[1]}`)) {
+    if (sheet.includes(`${returnMonth(keyParts[2])} - ${keyParts[1]}`)) {
       // If Sheet exists, update it, otherwise create it
 
       const response = (await sheets.spreadsheets.values.append(
