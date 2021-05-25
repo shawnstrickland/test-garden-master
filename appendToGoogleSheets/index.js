@@ -1,9 +1,10 @@
 var aws = require('aws-sdk')
-const {google} = require('googleapis');
+const { google } = require('googleapis');
+const { authorize } = require('./google')
 const sheets = google.sheets('v4');
 const s3 = new aws.S3();
 
-function returnMonth (monthDigit) {
+function returnMonth(monthDigit) {
   var month = new Array()
   month[0] = "January"
   month[1] = "February"
@@ -20,7 +21,7 @@ function returnMonth (monthDigit) {
   return month[monthDigit - 1]
 }
 
-async function main (event) {
+async function main(event) {
   let precipitationTotal
   let date
 
@@ -28,33 +29,33 @@ async function main (event) {
   try {
     const s3Event = event.Records[0].s3
     console.log(s3Event)
-  
+
     var params = {
-      Bucket: s3Event.bucket.name, 
+      Bucket: s3Event.bucket.name,
       Key: s3Event.object.key
     }
-    
+
     let keyParts = params.Key.split('/')
     date = `${keyParts[2]}/${keyParts[3]}/${keyParts[1]}`
 
     const file = await s3
       .getObject(params)
       .promise()
-      
+
     const bodyAsJSON = JSON.parse(file.Body.toString('utf-8'))
     precipitationTotal = bodyAsJSON.observations[0].imperial.precipTotal
-    
+
     // TODO: Write to sheet with month and year
     // if it doesn't already exist, add it, then append to new sheet
     let range = `${keyParts[2]} - ${keyParts[1]}!A1`; // using number of month for the time being
     let valueInputOption = "RAW";
     let myValue = precipitationTotal;
-    
+
     let values = [[date, myValue, new Date()]];
     let resource = {
-        values,
+      values,
     };
-    
+
     const authClient = await authorize();
 
     const sheet = (await sheets.spreadsheets.get({
@@ -84,11 +85,11 @@ async function main (event) {
   }
 }
 
-async function authorize() {
-  return new google.auth.JWT(process.env.GOOGLE_SHEETS_CLIENT_EMAIL, null, process.env.GOOGLE_SHEETS_PRIVATE_KEY.trim(), [
-    "https://www.googleapis.com/auth/spreadsheets",
-  ]);
-}
+// async function authorize() {
+//   return new google.auth.JWT(process.env.GOOGLE_SHEETS_CLIENT_EMAIL, null, process.env.GOOGLE_SHEETS_PRIVATE_KEY.trim(), [
+//     "https://www.googleapis.com/auth/spreadsheets",
+//   ]);
+// }
 
 exports.handler = async (event) => {
   let jsonBody = await main(event)

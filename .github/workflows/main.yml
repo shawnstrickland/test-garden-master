@@ -40,6 +40,7 @@ jobs:
           function_name: getCurrentWeather
           source: ./getCurrentWeather/index.js
           environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }},API_KEY=${{ secrets.WEATHER_API_KEY }},BUCKET_NAME=${{ secrets.BUCKET_NAME }}
+  
   deploy_sendPrecipitationReport_source:
     name: build and deploy sendPrecipitationReport lambda
     strategy:
@@ -71,6 +72,7 @@ jobs:
           function_name: sendPrecipitationReport
           source: ./sendPrecipitationReport/index.js
           environment: PHONE_NUMBER=${{ secrets.PHONE_NUMBER }},DAYS=3,WATER_NEEDED=0.5,SEND_MESSAGE=true,BUCKET_NAME=${{ secrets.BUCKET_NAME }}
+  
   deploy_appendToGoogleSheets_source:
     name: build and deploy appendToGoogleSheets lambda
     strategy:
@@ -112,5 +114,5 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: appendToGoogleSheets
-          source: ./appendToGoogleSheets/index.js # should be able to do a file list here from docs: "File list you want to zip"
+          source: ./appendToGoogleSheets/index.js,./appendToGoogleSheets/google.js,./appendToGoogleSheets/prettyDate.js # should be able to do a file list here from docs: "File list you want to zip"
           environment: GOOGLE_SHEETS_SPREADSHEET_ID=${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }},GOOGLE_SHEETS_PRIVATE_KEY=${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY }},GOOGLE_SHEETS_CLIENT_EMAIL=${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}
