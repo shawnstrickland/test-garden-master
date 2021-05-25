@@ -6,7 +6,8 @@ name: AppendToGoogleSheets CI
 # events but only for the main branch
 on:
   push:
-    branches: [ append-to-google-sheets-** ]
+    # branches: [ append-to-google-sheets-** ]
+    branches: [ master ]
 
 jobs:
   deploy_appendToGoogleSheets_source:
