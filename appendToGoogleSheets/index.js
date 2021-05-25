@@ -10,6 +10,7 @@ async function main(event) {
     const s3Event = event.Records[0].s3;
     console.log(s3Event);
 
+    // test
     var params = {
       Bucket: s3Event.bucket.name,
       Key: s3Event.object.key
