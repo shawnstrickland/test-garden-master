@@ -75,9 +75,9 @@ jobs:
   
   deploy_appendToGoogleSheets_source:
     name: build and deploy appendToGoogleSheets lambda
+    app-name: appendToGoogleSheets
     strategy:
       matrix:
-        app-name: appendToGoogleSheets
         node-version: [14.x]
     runs-on: ubuntu-latest
     steps:
@@ -88,14 +88,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install and build
         run: |
-          npm ci --prefix ./${{ matrix.app-name }}
-          npm run build --if-present --prefix ./${{ matrix.app-name }}
+          npm ci --prefix ./${{ app-name }}
+          npm run build --if-present --prefix ./${{ app-name }}
         env:
           CI: true
       - name: zip
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r ${{ matrix.app-name }}Bundle.zip ./${{ matrix.app-name }}
+          args: zip -qq -r ${{ app-name }}Bundle.zip ./${{ app-name }}
       # This works below, however publishing on each push may not be necessary (and node modules are quite heavy)
       # - name: AWS Lambda Layer Publish
       #   uses: killdozerx2/aws-lambda-publishlayer@v1.0.0
@@ -114,6 +114,6 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: ${{ matrix.app-name }}
-          source: ./${{ matrix.app-name }}/index.js,./${{ matrix.app-name }}/google.js,./${{ matrix.app-name }}/prettyDate.js,./${{ matrix.app-name }}/aws.js # should be able to do a file list here from docs: "File list you want to zip"
+          function_name: ${{ app-name }}
+          source: ./${{ app-name }}/index.js,./${{ app-name }}/google.js,./${{ app-name }}/prettyDate.js,./${{ matrix.app-name }}/aws.js # should be able to do a file list here from docs: "File list you want to zip"
           environment: GOOGLE_SHEETS_SPREADSHEET_ID=${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }},GOOGLE_SHEETS_PRIVATE_KEY=${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY }},GOOGLE_SHEETS_CLIENT_EMAIL=${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}
