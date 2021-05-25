@@ -8,6 +8,7 @@ on:
   push:
     branches: [ main ]
 
+jobs:
   deploy_appendToGoogleSheets_source:
     name: build and deploy appendToGoogleSheets lambda
     strategy:
