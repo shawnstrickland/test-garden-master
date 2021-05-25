@@ -1,23 +1,9 @@
-var aws = require('aws-sdk')
-const { google } = require('googleapis');
-const { authorize, getSheetNames, appendToSheet, getS3ObjectAsJSON } = require('./google');
-const { returnMonth } = require('./prettyDate')
-const sheets = google.sheets('v4');
-const s3 = new aws.S3();
-
-function createSheetsResource(date, precipitationTotal) {
-  const values = [[date, precipitationTotal, new Date()]];
-
-  let resource = {
-    values,
-  };
-
-  return resource;
-}
+const { getS3ObjectAsJSON } = require('./aws')
+const { authorize, createSheetsResource, getSheetNames, appendToSheet } = require('./google');
+const { returnMonth } = require('./prettyDate');
 
 async function main(event) {
   let precipitationTotal;
-  let date;
 
   // Get S3 object written
   try {
@@ -38,7 +24,7 @@ async function main(event) {
     await getSheetNames(authClient);
 
     const s3ObjectKeyParts = params.Key.split('/');
-    const resource = createSheetsResource(`${s3ObjectKeyParts[2]}/${s3ObjectKeyParts[3]}/${s3ObjectKeyParts[1]}`, precipitationTotal)
+    const resource = createSheetsResource(`${s3ObjectKeyParts[2]}/${s3ObjectKeyParts[3]}/${s3ObjectKeyParts[1]}`, precipitationTotal);
     return appendToSheet(`${s3ObjectKeyParts[2]} - ${s3ObjectKeyParts[1]}!A1`, 'RAW', resource, authClient);
   } catch (err) {
     console.log(err);

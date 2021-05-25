@@ -1,4 +1,5 @@
 const { google } = require('googleapis');
+const sheets = google.sheets('v4');
 
 async function authorize() {
   return new google.auth.JWT(process.env.GOOGLE_SHEETS_CLIENT_EMAIL, null, process.env.GOOGLE_SHEETS_PRIVATE_KEY.trim(), [
@@ -6,12 +7,14 @@ async function authorize() {
   ]);
 }
 
-async function getS3ObjectAsJSON(params) {
-  const file = await s3
-    .getObject(params)
-    .promise();
+function createSheetsResource(date, precipitationTotal) {
+  const values = [[date, precipitationTotal, new Date()]];
 
-  return JSON.parse(file.Body.toString('utf-8'));
+  let resource = {
+    values,
+  };
+
+  return resource;
 }
 
 async function getSheetNames(authClient) {
@@ -43,7 +46,7 @@ async function appendToSheet(range, valueInputOption, resource, authClient) {
 
 module.exports = {
   authorize,
-  getS3ObjectAsJSON,
+  createSheetsResource,
   getSheetNames,
   appendToSheet
 }
