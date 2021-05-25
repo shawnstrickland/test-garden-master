@@ -114,5 +114,5 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: appendToGoogleSheets
-          source: ./appendToGoogleSheets/index.js,./appendToGoogleSheets/google.js,./appendToGoogleSheets/prettyDate.js,./appendToGoogleSheets/aws.js # should be able to do a file list here from docs: "File list you want to zip"
+          source: ./appendToGoogleSheets/index.js,./appendToGoogleSheets/google.js,./appendToGoogleSheets/prettyDate.js,./appendToGoogleSheets/aws.js
           environment: GOOGLE_SHEETS_SPREADSHEET_ID=${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }},GOOGLE_SHEETS_PRIVATE_KEY=${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY }},GOOGLE_SHEETS_CLIENT_EMAIL=${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}
