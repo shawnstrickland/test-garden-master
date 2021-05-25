@@ -1,24 +1,18 @@
 var aws = require('aws-sdk')
 const { google } = require('googleapis');
-const { authorize } = require('./google');
+const { authorize, getSheetNames, appendToSheet, getS3ObjectAsJSON } = require('./google');
+const { returnMonth } = require('./prettyDate')
 const sheets = google.sheets('v4');
 const s3 = new aws.S3();
 
-function returnMonth(monthDigit) {
-  var month = new Array();
-  month[0] = "January";
-  month[1] = "February";
-  month[2] = "March";
-  month[3] = "April";
-  month[4] = "May";
-  month[5] = "June";
-  month[6] = "July";
-  month[7] = "August";
-  month[8] = "September";
-  month[9] = "October";
-  month[10] = "November";
-  month[11] = "December";
-  return month[monthDigit - 1];
+function createSheetsResource(date, precipitationTotal) {
+  const values = [[date, precipitationTotal, new Date()]];
+
+  let resource = {
+    values,
+  };
+
+  return resource;
 }
 
 async function main(event) {
@@ -35,57 +29,22 @@ async function main(event) {
       Key: s3Event.object.key
     }
 
-    let keyParts = params.Key.split('/');
-    date = `${keyParts[2]}/${keyParts[3]}/${keyParts[1]}`;
-
-    const file = await s3
-      .getObject(params)
-      .promise();
-
-    const bodyAsJSON = JSON.parse(file.Body.toString('utf-8'));
+    const bodyAsJSON = await getS3ObjectAsJSON(params);
     precipitationTotal = bodyAsJSON.observations[0].imperial.precipTotal;
 
     // TODO: Write to sheet with month and year
     // if it doesn't already exist, add it, then append to new sheet
-    let range = `${keyParts[2]} - ${keyParts[1]}!A1`; // using number of month for the time being
-    let valueInputOption = "RAW";
-    let myValue = precipitationTotal;
-
-    let values = [[date, myValue, new Date()]];
-    let resource = {
-      values,
-    };
-
     const authClient = await authorize();
+    await getSheetNames(authClient);
 
-    const sheet = (await sheets.spreadsheets.get({
-      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
-      auth: authClient
-    })).data.sheets.map(sheet => {
-      return sheet.properties.title
-    })
-
-    console.log(sheet)
-
-    const response = (await sheets.spreadsheets.values.append(
-      {
-        spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
-        range,
-        valueInputOption,
-        resource,
-        auth: authClient
-      }
-    )).data;
-
-    // TODO: Change code below to process the `response` object:
-    console.log(JSON.stringify(response, null, 2));
-    return response
+    const s3ObjectKeyParts = params.Key.split('/');
+    const resource = createSheetsResource(`${s3ObjectKeyParts[2]}/${s3ObjectKeyParts[3]}/${s3ObjectKeyParts[1]}`, precipitationTotal)
+    return appendToSheet(`${s3ObjectKeyParts[2]} - ${s3ObjectKeyParts[1]}!A1`, 'RAW', resource, authClient);
   } catch (err) {
     console.log(err);
   }
 }
 
 exports.handler = async (event) => {
-  let jsonBody = await main(event)
-  return jsonBody
+  return main(event);
 };
