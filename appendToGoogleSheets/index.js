@@ -1,5 +1,5 @@
 const { getS3ObjectAsJSON } = require('./aws')
-const { authorize, createSheetsResource, getSheetNames, appendToSheet } = require('./google');
+const { authorize, createSheetsResource, getSheetNames, createSheet, appendToSheet } = require('./google');
 const { returnMonth } = require('./prettyDate');
 
 async function main(event) {
