@@ -19,14 +19,14 @@ function createSheetsResource(date, precipitationTotal) {
 }
 
 async function getSheetNames(authClient) {
-  const sheet = (await sheets.spreadsheets.get({
+  const sheetNames = (await sheets.spreadsheets.get({
     spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
     auth: authClient
   })).data.sheets.map(sheet => {
-    return sheet.properties.title
-  })
+    return sheet.properties.title;
+  });
 
-  console.log(sheet)
+  return sheetNames;
 }
 
 async function createSheet(sheetName, authClient) {
