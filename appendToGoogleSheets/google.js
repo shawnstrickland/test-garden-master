@@ -29,6 +29,25 @@ async function getSheetNames(authClient) {
   console.log(sheet)
 }
 
+async function createSheet(sheetName, authClient) {
+  const resource = {
+    properties: {
+      title: sheetName
+    }
+  }
+  const response = (await sheets.spreadsheets.create(
+    {
+      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+      resource,
+      auth: authClient
+    }
+  )).data;
+
+  // TODO: Change code below to process the `response` object:
+  console.log(JSON.stringify(response, null, 2));
+  return response;
+}
+
 async function appendToSheet(range, valueInputOption, resource, authClient) {
   const response = (await sheets.spreadsheets.values.append(
     {
@@ -49,5 +68,6 @@ module.exports = {
   authorize,
   createSheetsResource,
   getSheetNames,
+  createSheet,
   appendToSheet
 }
