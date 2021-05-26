@@ -31,7 +31,6 @@ async function getSheetNames(authClient) {
 
 async function createSheet(sheetName, authClient) {
   const resource = {
-    spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
     requests: [
       {
         addSheet: {
@@ -45,6 +44,7 @@ async function createSheet(sheetName, authClient) {
 
   const response = (await sheets.spreadsheets.batchUpdate(
     {
+      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
       resource,
       auth: authClient
     }
