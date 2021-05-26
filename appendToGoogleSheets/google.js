@@ -26,19 +26,25 @@ async function getSheetNames(authClient) {
     return sheet.properties.title;
   });
 
-  console.log(sheetNames);
   return sheetNames;
 }
 
 async function createSheet(sheetName, authClient) {
   const resource = {
-    properties: {
-      title: sheetName
-    }
+    spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+    requests: [
+      {
+        addSheet: {
+          properties: {
+            title: sheetName
+          }
+        }
+      }
+    ]
   }
-  const response = (await sheets.spreadsheets.create(
+
+  const response = (await sheets.spreadsheets.batchUpdate(
     {
-      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
       resource,
       auth: authClient
     }
