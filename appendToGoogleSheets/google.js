@@ -1,5 +1,8 @@
 const { google } = require('googleapis');
 const sheets = google.sheets('v4');
+const dayjs = require('dayjs');
+var localizedFormat = require('dayjs/plugin/localizedFormat')
+dayjs.extend(localizedFormat);
 
 async function authorize() {
   return new google.auth.JWT(process.env.GOOGLE_SHEETS_CLIENT_EMAIL, null, process.env.GOOGLE_SHEETS_PRIVATE_KEY.trim(), [
@@ -9,7 +12,7 @@ async function authorize() {
 
 function createSheetsResource(date, precipitationTotal) {
   // TODO: Adjust date to time zone and beautify
-  const values = [[date, precipitationTotal, new Date()]];
+  const values = [[date, precipitationTotal, dayjs().format('LLL')]];
 
   let resource = {
     values,
