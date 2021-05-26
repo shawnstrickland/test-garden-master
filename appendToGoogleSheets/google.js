@@ -8,6 +8,7 @@ async function authorize() {
 }
 
 function createSheetsResource(date, precipitationTotal) {
+  // TODO: Adjust date to time zone and beautify
   const values = [[date, precipitationTotal, new Date()]];
 
   let resource = {
