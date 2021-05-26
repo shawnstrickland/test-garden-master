@@ -18,7 +18,7 @@ async function main(event) {
     await getSheetNames(authClient);
 
     const s3ObjectKeyParts = s3Event.object.key.split('/');
-    const targetMonth = returnMonth(s3ObjectKeyParts[2]);
+    const targetMonth = returnMonth(+s3ObjectKeyParts[2]);
     const resource = createSheetsResource(`${s3ObjectKeyParts[2]}/${s3ObjectKeyParts[3]}/${s3ObjectKeyParts[1]}`, precipitationTotal);
     return appendToSheet(`${targetMonth} - ${s3ObjectKeyParts[1]}!A1`, 'RAW', resource, authClient);
   } catch (err) {
