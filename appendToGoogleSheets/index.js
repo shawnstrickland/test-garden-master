@@ -17,16 +17,12 @@ async function main(event) {
     const targetMonth = returnMonth(+s3ObjectKeyParts[2]);
     const authClient = await authorize();
     const sheetNames = await getSheetNames(authClient);
-    if (sheetNames.includes(`${targetMonth} - ${s3ObjectKeyParts[1]}`)) {
-      const resource = createSheetsResource(`${s3ObjectKeyParts[2]}/${s3ObjectKeyParts[3]}/${s3ObjectKeyParts[1]}`, precipitationTotal);
-      // Write to sheet with month and year
-      return appendToSheet(`${targetMonth} - ${s3ObjectKeyParts[1]}!A1`, 'RAW', resource, authClient);
-    } else {
-      // create sheet, then append to it
+    const resource = createSheetsResource(`${s3ObjectKeyParts[2]}/${s3ObjectKeyParts[3]}/${s3ObjectKeyParts[1]}`, precipitationTotal);
+    // create sheet, then append to it
+    if (!sheetNames.includes(`${targetMonth} - ${s3ObjectKeyParts[1]}`)) {
       await createSheet(`${targetMonth} - ${s3ObjectKeyParts[1]}`, authClient)
-      // Write to sheet with month and year
-      return appendToSheet(`${targetMonth} - ${s3ObjectKeyParts[1]}!A1`, 'RAW', resource, authClient);
     }
+    return appendToSheet(`${targetMonth} - ${s3ObjectKeyParts[1]}!A1`, 'RAW', resource, authClient);
   } catch (err) {
     console.log(err);
   }
