@@ -26,6 +26,7 @@ async function getSheetNames(authClient) {
     return sheet.properties.title;
   });
 
+  console.log(sheetNames);
   return sheetNames;
 }
 
